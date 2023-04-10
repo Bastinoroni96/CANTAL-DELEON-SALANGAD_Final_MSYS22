@@ -22,6 +22,23 @@
                                     <td> {{ d.rate }} </td>
                                     <td> {{ d.allowance }} </td>
                                     <td> {{ d.overtime_pay }} </td>
+                                    <td>
+                                        <form id="employee_update" method="POST">
+                                            <div class="form-check-inline">
+                                                <a type="button" class="btn btn-primary" href="#">Update</a>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <a type="button" class="btn btn-danger" href="#">Delete</a>
+                                            </div>
+                                            <br>
+                                            <div class="form-check-inline">
+                                                <input type="text" class="form-control" id="overtime_pay" name="overtime_pay" placeholder="Overtime Hours">
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <a type="button" class="btn btn-Success" href="#">Add Overtime</a>
+                                            </div>
+                                        </form>
+                                    </td>
                                     
                                 </tr>
                                 {% endfor %}
