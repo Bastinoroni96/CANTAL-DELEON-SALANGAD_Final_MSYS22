@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from .models import Employee, Payslip 
 
 
@@ -7,3 +8,5 @@ def view_employee(request):
         employee_objects = Employee.objects.all()
         return render(request, 'payroll_app/view_employee.html',{'employees':employee_objects})
 
+def create_employee(request):
+        return render(request, 'payroll_app/create_employee.html')

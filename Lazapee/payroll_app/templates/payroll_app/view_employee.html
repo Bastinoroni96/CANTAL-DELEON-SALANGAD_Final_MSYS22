@@ -3,47 +3,54 @@
 
                 {% block content %}
                 <div class="row">
-                    <div class="col-xs-1 center-block">
-                        <table class="table table-striped mb-5">
-                            <thead>
-                                <th scope="col"> Name </th>
-                                <th scope="col"> ID Number </th>
-                                <th scope="col"> Rate </th>
-                                <th scope="col"> Allowance </th>
-                                <th scope="col"> Overtime </th>
-                                <th scope="col"> Options </th>
-                                <th scope="col">  </th>
-                            </thead>
-                            <tbody>
-                                {% for d in employees %}
-                                <tr>
-                                    <td> {{ d.name }} </td>
-                                    <td> {{ d.id_number }} </td>
-                                    <td> {{ d.rate }} </td>
-                                    <td> {{ d.allowance }} </td>
-                                    <td> {{ d.overtime_pay }} </td>
-                                    <td>
-                                        <form id="employee_update" method="POST">
-                                            <div class="form-check-inline">
-                                                <a type="button" class="btn btn-primary" href="#">Update</a>
-                                            </div>
-                                            <div class="form-check-inline">
-                                                <a type="button" class="btn btn-danger" href="#">Delete</a>
-                                            </div>
-                                            <br>
-                                            <div class="form-check-inline">
-                                                <input type="text" class="form-control" id="overtime_pay" name="overtime_pay" placeholder="Overtime Hours">
-                                            </div>
-                                            <div class="form-check-inline">
-                                                <a type="button" class="btn btn-Success" href="#">Add Overtime</a>
-                                            </div>
-                                        </form>
-                                    </td>
-                                    
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                    <div class="mx-auto col-10 col-md-10 col-lg-10 mt-3">
+                        <div style="display: flex; align-items: center;">
+                            <h1>Employees</h1>
+                            <a type="button" class="btn btn-secondary" href="{% url 'create_employee'%}" style="margin-left: auto;">+ New Employee</a>
+                        </div>
+                        
+                        <div class="col-xs-1 center-block">
+                            <table class="table table-striped mb-5">
+                                <thead>
+                                    <th scope="col"> Name </th>
+                                    <th scope="col"> ID Number </th>
+                                    <th scope="col"> Rate </th>
+                                    <th scope="col"> Allowance </th>
+                                    <th scope="col"> Overtime </th>
+                                    <th scope="col"> Options </th>
+                                    <th scope="col">  </th>
+                                </thead>
+                                <tbody>
+                                    {% for d in employees %}
+                                    <tr>
+                                        <td> {{ d.name }} </td>
+                                        <td> {{ d.id_number }} </td>
+                                        <td> {{ d.rate }} </td>
+                                        <td> {{ d.allowance }} </td>
+                                        <td> {{ d.overtime_pay }} </td>
+                                        <td>
+                                            <form id="employee_update" method="POST">
+                                                <div class="form-check-inline">
+                                                    <a type="button" class="btn btn-primary" href="#">Update</a>
+                                                </div>
+                                                <div class="form-check-inline">
+                                                    <a type="button" class="btn btn-danger" href="#">Delete</a>
+                                                </div>
+                                                <br>
+                                                <div class="form-check-inline">
+                                                    <input type="text" class="form-control" id="overtime_pay" name="overtime_pay" placeholder="Overtime Hours">
+                                                </div>
+                                                <div class="form-check-inline">
+                                                    <a type="button" class="btn btn-Success" href="#">Add Overtime</a>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 {% endblock %}
