@@ -21,3 +21,7 @@ def create_employee(request):
 
 def update_employee(request):
         return render(request, 'payroll_app/update_employee.html')
+
+def delete_employee(request, pk):
+        Employee.objects.filter(pk=pk).delete()
+        return redirect('view_employee')
