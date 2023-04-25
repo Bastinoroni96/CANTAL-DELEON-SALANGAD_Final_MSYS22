@@ -9,4 +9,15 @@ def view_employee(request):
         return render(request, 'payroll_app/view_employee.html',{'employees':employee_objects})
 
 def create_employee(request):
-        return render(request, 'payroll_app/create_employee.html')
+        if(request.method=="POST"):
+                name = request.POST.get('name')
+                id_number = request.POST.get('id')
+                rate = request.POST.get('rate')
+                allowance = request.POST.get('allowance') or None
+                Employee.objects.create(name=name, id_number=id_number, rate=rate, allowance=allowance)
+                return redirect('view_employee')
+        else:
+                return render(request, 'payroll_app/create_employee.html')
+
+def update_employee(request):
+        return render(request, 'payroll_app/update_employee.html')

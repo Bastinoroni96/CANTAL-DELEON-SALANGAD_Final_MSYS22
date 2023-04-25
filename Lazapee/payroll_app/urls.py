@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.view_employee, name='view_employee'),
     path('create_employee', views.create_employee, name='create_employee'),
+    path('update_employee', views.update_employee, name='update_employee'),
 ]
