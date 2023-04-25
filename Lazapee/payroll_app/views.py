@@ -19,8 +19,17 @@ def create_employee(request):
         else:
                 return render(request, 'payroll_app/create_employee.html')
 
-def update_employee(request):
-        return render(request, 'payroll_app/update_employee.html')
+def update_employee(request, pk):
+        if(request.method=="POST"):
+                name = request.POST.get('name')
+                id_number = request.POST.get('id')
+                rate = request.POST.get('rate')
+                allowance = request.POST.get('allowance') or None
+                Employee.objects.filter(pk=pk).update(name=name, id_number=id_number, rate=rate, allowance=allowance)
+                return redirect('view_employee')
+        else:
+                e = get_object_or_404(Employee, pk=pk)
+                return render(request, 'payroll_app/update_employee.html', {'e':e})
 
 def delete_employee(request, pk):
         Employee.objects.filter(pk=pk).delete()

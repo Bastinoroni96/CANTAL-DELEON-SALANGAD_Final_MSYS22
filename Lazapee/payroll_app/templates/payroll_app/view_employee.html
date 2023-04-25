@@ -31,7 +31,7 @@
                                         <td>
                                             <form id="employee_update" method="POST">
                                                 <div class="form-check-inline">
-                                                    <a type="button" class="btn btn-primary" href="#">Update</a>
+                                                    <a type="button" class="btn btn-primary" href="{% url 'update_employee' pk=d.pk %}">Update</a>
                                                 </div>
                                                 <div class="form-check-inline">
                                                     <a type="button" class="btn btn-danger" href="{% url 'delete_employee' pk=d.pk %}">Delete</a>
