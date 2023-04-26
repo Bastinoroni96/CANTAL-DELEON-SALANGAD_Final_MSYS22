@@ -29,7 +29,7 @@
                                         <td> {{ d.allowance }} </td>
                                         <td> {{ d.overtime_pay }} </td>
                                         <td>
-                                            <form id="employee_update" method="POST">
+                                            <form id="employee_update" method="POST" action="{% url 'calculate_overtimepay' pk=d.pk %}">{% csrf_token %}
                                                 <div class="form-check-inline">
                                                     <a type="button" class="btn btn-primary" href="{% url 'update_employee' pk=d.pk %}">Update</a>
                                                 </div>
@@ -38,10 +38,10 @@
                                                 </div>
                                                 <br>
                                                 <div class="form-check-inline">
-                                                    <input type="text" class="form-control" id="overtime_pay" name="overtime_pay" placeholder="Overtime Hours">
+                                                    <input type="number" class="form-control" id="overtime_hours" name="overtime_hours" placeholder="Overtime Hours">
                                                 </div>
                                                 <div class="form-check-inline">
-                                                    <a type="button" class="btn btn-Success" href="#">Add Overtime</a>
+                                                    <button type="submit" class="btn btn-Success">Add Overtime</button>
                                                 </div>
                                             </form>
                                         </td>
