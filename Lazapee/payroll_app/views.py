@@ -63,8 +63,7 @@ def delete_employee(request, pk):
 def calculate_overtimepay(request, pk):
         if(request.method=="POST"):
                 employee = get_object_or_404(Employee, pk=pk)
-                overtime_hours = request.POST.get('overtime_hours')
-                print(overtime_hours)
+                overtime_hours = request.POST.get('overtime_hours') or 0.0
                 rate = employee.rate
                 overtime_pay_value = (rate / 160) * 1.5 * float(overtime_hours)
                 Employee.objects.filter(pk=pk).update(overtime_pay=overtime_pay_value)
