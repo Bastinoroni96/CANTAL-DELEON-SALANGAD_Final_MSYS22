@@ -24,4 +24,6 @@ urlpatterns = [
     path('update_employee/<int:pk>/', views.update_employee, name='update_employee'),
     path('delete_employee/<int:pk>/', views.delete_employee, name='delete_employee'),
     path('calculate_overtimepay/<int:pk>/', views.calculate_overtimepay, name='calculate_overtimepay'),
+    path('payslips', views.payslips, name='payslips'),
+
 ]

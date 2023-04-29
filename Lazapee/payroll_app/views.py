@@ -70,3 +70,6 @@ def calculate_overtimepay(request, pk):
                 return redirect('view_employee')
         
         return redirect('view_employee')
+
+def payslips(request):
+        return render(request, 'payroll_app/payslips.html')
