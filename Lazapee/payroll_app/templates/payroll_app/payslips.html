@@ -6,7 +6,7 @@
                     <h1>Payroll Creation</h1>
                     <div class="card bg-light mb-3">
                         <div class="card-body">
-                            <form method="POST" action="">{% csrf_token %}
+                            <form method="POST" action="{% url 'payslips' %}">{% csrf_token %}
                                 <div class="form-group mb-3 text-center align-items-center" style>
                                     <label class="form-check-inline" for="payroll_for">Payroll for:</label>
                                     <select class="form-check-inline form-select" style="width: 250px;" id="payroll_for"  name="payroll_for">
@@ -69,6 +69,19 @@
                                 <th scope="col"> Options </th>
                                 <th scope="col">  </th>
                             </thead>
+                            <tbody>
+                                {% for p in payslips %}
+                                <tr>
+                                    <td> {{ p.id_number }} </td>
+                                    <td> {{ p.month }} {{ p.date_range }}, {{ p.year }} </td>
+                                    <td> {{ p.pay_cycle }} </td>
+                                    <td> {{ p.total_pay }} </td>
+                                    <td><a href="#"  class="btn btn-dark">View</button></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                         
                 </div>
                 {% endblock %}
