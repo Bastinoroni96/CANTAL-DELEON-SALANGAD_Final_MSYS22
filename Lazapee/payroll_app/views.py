@@ -72,4 +72,36 @@ def calculate_overtimepay(request, pk):
         return redirect('view_employee')
 
 def payslips(request):
-        return render(request, 'payroll_app/payslips.html')
+        employees = Employee.objects.all()
+        if(request.method=="POST"):
+                payroll_for = request.POST.get('payroll_for')
+                payroll_pk = Employee.objects.get(pk=payroll_for)
+                payroll_rate = payroll_pk.rate
+                payroll_allowance = payroll_pk.allowance
+                payroll_overtime = payroll_pk.overtime_pay
+                month = request.POST.get('month')
+                year = request.POST.get('year')
+                cycle = request.POST.get('cycle') #Make if statements and do the math with variables of payslips and employees
+
+                if cycle == '1':
+                        pay_cycle1 = 1
+                        date_range1 = '1-15'
+                        tax1 = (Payslip.getCycleRate + payroll_allowance + payroll_overtime - Payslip.pag_ibig)*0.2
+                        total_pay_Wtax1 = (Payslip.getCycleRate + payroll_allowance + payroll_overtime - Payslip.pag_ibig)-tax1
+                        Payslip.objects.create(id_number=payroll_pk, month=month, date_range=date_range1, year=year, pay_cycle=pay_cycle1, rate=payroll_rate, earnings_allowance=payroll_allowance, deductions_tax=tax1, overtime=payroll_overtime, total_pay=total_pay_Wtax1)
+                        Employee.resetOvertime()
+                        return redirect('payslips')
+
+
+
+                if cycle == '2':
+                        pay_cycle2 = 2
+                        date_range2 = '16-30'
+                        philhealth = payroll_pk.rate*0.04
+                        tax2 = (Payslip.getCycleRate + payroll_allowance + payroll_overtime - philhealth - Payslip.sss)*0.2
+                        total_pay_Wtax2 = (Payslip.getCycleRate + payroll_allowance + payroll_overtime - philhealth - Payslip.sss)-tax2
+                        Payslip.objects.create(id_number=payroll_pk, month=month, date_range=date_range2, year=year, pay_cycle=pay_cycle2, rate=payroll_rate, earnings_allowance=payroll_allowance, deductions_health=tax2, overtime=payroll_overtime, total_pay=total_pay_Wtax2)
+                        Employee.resetOvertime()
+                        return redirect('payslips')
+
+        return render(request, 'payroll_app/payslips.html', {'employees':employees})

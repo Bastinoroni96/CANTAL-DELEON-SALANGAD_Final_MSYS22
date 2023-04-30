@@ -12,6 +12,9 @@
                                     <select class="form-check-inline form-select" style="width: 250px;" id="payroll_for"  name="payroll_for">
                                         <option value="" disabled selected hidden>Choose...</option>
                                         <option value="all_employees">All Employees...</option>
+                                        {% for e in employees %}
+                                        <option value="{{ e.pk }}">{{ e.id_number }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                                 <hr>
@@ -20,7 +23,18 @@
                                     <label class="form-check-inline" for="month">Month:</label>
                                     <select class="form-check-inline form-select" style="width: 170px;" id="month"  name="month">
                                         <option value="" disabled selected hidden>Choose...</option>
-                                        <option value="all_employees">All Employees...</option>
+                                        <option value="01">January</option>
+                                        <option value="02">February</option>
+                                        <option value="03">March</option>
+                                        <option value="04">April</option>
+                                        <option value="05">May</option>
+                                        <option value="06">June</option>
+                                        <option value="07">July</option>
+                                        <option value="08">August</option>
+                                        <option value="09">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
                                     </select>
                                 </div>
 
@@ -33,7 +47,8 @@
                                     <label class="form-check-inline" for="cycle">Cycle:</label>
                                     <select class="form-check-inline form-select" style="width: 170px;" id="cycle"  name="cycle">
                                         <option value="" disabled selected hidden>Choose...</option>
-                                        <option value="all_employees">All Employees...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
                                     </select>
                                 </div>
                                 

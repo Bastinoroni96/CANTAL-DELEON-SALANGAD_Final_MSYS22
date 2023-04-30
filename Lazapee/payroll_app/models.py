@@ -42,8 +42,8 @@ class Payslip(models.Model):
     earnings_allowance = models.FloatField()
     deductions_tax = models.FloatField()
     deductions_health = models.FloatField()
-    pag_ibig = models.FloatField()
-    sss = models.FloatField()
+    pag_ibig = models.FloatField(default=100)
+    sss = models.FloatField(default=0.045)
     overtime = models.FloatField()
     total_pay = models.FloatField()
 
