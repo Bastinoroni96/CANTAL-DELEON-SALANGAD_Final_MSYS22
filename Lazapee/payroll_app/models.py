@@ -29,7 +29,7 @@ class Employee(models.Model):
         return self.allowance
     
     def __str__(self):
-        return f"pk: {self.id_number}, rate: {self.rate}"
+        return f"{self.id_number}"
      
     
 class Payslip(models.Model):
@@ -40,8 +40,8 @@ class Payslip(models.Model):
     pay_cycle = models.IntegerField()
     rate = models.FloatField()
     earnings_allowance = models.FloatField()
-    deductions_tax = models.FloatField()
-    deductions_health = models.FloatField()
+    deductions_tax = models.FloatField(default=0)
+    deductions_health = models.FloatField(default=0)
     pag_ibig = models.FloatField(default=100)
     sss = models.FloatField(default=0.045)
     overtime = models.FloatField()
