@@ -110,6 +110,6 @@ def payslips(request):
 
         return render(request, 'payroll_app/payslips.html', {'employees':employees, 'payslips':payslips})
 
-def view_payslips(request, payroll_pk):
-        e = get_object_or_404(Employee, pk=payroll_pk)
-        return render(request, 'payroll_app/view_payslips.html', {'e': e})
+def view_payslips(request):
+        employees = Employee.objects.all()
+        return render(request, 'payroll_app/view_payslips.html', {'employees':employees})
