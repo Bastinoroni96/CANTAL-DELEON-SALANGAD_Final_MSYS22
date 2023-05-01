@@ -110,3 +110,6 @@ def payslips(request):
                         return redirect('payslips')
 
         return render(request, 'payroll_app/payslips.html', {'employees':employees, 'payslips':payslips})
+
+def view_payslips(request):
+        pass
