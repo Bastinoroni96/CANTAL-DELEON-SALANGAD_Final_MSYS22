@@ -96,7 +96,6 @@ def payslips(request):
                         return redirect('payslips')
 
 
-
                 if cycle == '2':
                         pay_cycle2 = 2
                         date_range2 = '16-30'
@@ -111,5 +110,6 @@ def payslips(request):
 
         return render(request, 'payroll_app/payslips.html', {'employees':employees, 'payslips':payslips})
 
-def view_payslips(request):
-        pass
+def view_payslips(request, payroll_pk):
+        e = get_object_or_404(Employee, pk=payroll_pk)
+        return render(request, 'payroll_app/view_payslips.html', {'e': e})

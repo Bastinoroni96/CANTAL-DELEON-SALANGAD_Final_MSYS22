@@ -1,3 +1,23 @@
 {% extends 'payroll_app/base.html' %}
 {% load static %}
 
+{% block content %}
+<div class="row">
+    <div class="col mt-3">
+        <p>
+            NAME: {{e.employees}}
+        </p>
+        <p>
+            ID NUMBER: {{e.id_number}}
+        </p>
+    </div>
+    <div class="col mt-3">
+        <p>
+            DATE: {{p.month}} {{p.date_range}}
+        </p>
+        <p>
+            PAYSLIP ID: {{p.id_number}}
+        </p>
+    </div>
+</div>
+{% endblock %}

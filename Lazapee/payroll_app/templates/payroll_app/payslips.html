@@ -75,7 +75,7 @@
                                     <td> {{ p.month }} {{ p.date_range }}, {{ p.year }} </td>
                                     <td> {{ p.pay_cycle }} </td>
                                     <td> {{ p.total_pay }} </td>
-                                    <td><a href="#"  class="btn btn-dark">View</button></td>
+                                    <td><a href="{% url 'view_payslips' payroll_pk=e.pk %}"  class="btn btn-dark">View</button></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
