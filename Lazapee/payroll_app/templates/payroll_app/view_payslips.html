@@ -14,7 +14,7 @@
         </div>
         <div class="col mt-4">
             <p class="text-secondary">
-                DATE: {{payslips.month}} {{payslips.date_range}}
+                DATE: {{payslips.month}} {{payslips.date_range}}, {{payslips.year}}
                 <br>
                 PAYSLIP ID: {{payslips.pk}}
             </p>
@@ -111,7 +111,7 @@
         </div>
         <div class="col mt-1 mb-2">
             <p>
-                <h5 class="text-center">PHP {{payslips.pk}}</h5>
+                <h5 class="text-center">PHP {{payslips.total_pay}}</h5>
             </p>
         </div>
     </div>
