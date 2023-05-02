@@ -5,20 +5,18 @@
 
 <div class="container-sm">
     <div class="row">
-        <div class="col mt-3">
-            {% for e in employees %}
+        <div class="col mt-4">
             <p class="text-secondary">
-                NAME: {{e.name}}
+                NAME: {{payslips.name}}
                 <br>
-                ID NUMBER: {{e.id_number}}
+                ID NUMBER: {{payslips.id_number}}
             </p>
-            {% endfor %}
         </div>
-        <div class="col mt-3">
+        <div class="col mt-4">
             <p class="text-secondary">
-                DATE: {{p.month}} {{p.date_range}}
+                DATE: {{payslips.month}} {{payslips.date_range}}
                 <br>
-                PAYSLIP ID: {{p.id_number}}
+                PAYSLIP ID: {{payslips.pk}}
             </p>
         </div>
     </div>
@@ -39,13 +37,15 @@
         </div>
 
         <div class="col mt-2">
-            <p class="text-center">
-                <h6>AMOUNT:</h6>
+            <p>
+                <h6 class="text-center">AMOUNT</h6>
             </p>
             <p>
+                {{payslips.rate}}
                 <br>
+                {{payslips.earnings_allowance}}
                 <br>
-                <br>
+                {{payslips.overtime}}
             </p>
             <hr/>
         </div>
@@ -59,7 +59,7 @@
         </div>
         <div class="col mt-1 mb-2">
             <p>
-                <h6>PHP</h6>
+                <h6 class="text-center">PHP {{payslips.rate}} + {{payslips.earnings_allowance}} + {{payslips.overtime}}</h6>
             </p>
         </div>
         <hr/>
@@ -81,9 +81,11 @@
             <p>
                 <br>
                 <br>
+                {{payslips.deductions_tax}}      
                 <br>
+                {{payslips.deductions_health}}
                 <br>
-                <br>
+                {{payslips.sss}}
             </p>
         <hr/>
         </div>
@@ -96,7 +98,7 @@
         </div>
         <div class="col mt-1 mb-2">
             <p>
-                <h6>PHP</h6>
+                <h6 class="text-center">PHP {{payslips.deductions_tax}} + {{payslips.deductions_health}} + {{payslips.sss}}</h6>
             </p>
         </div>
         <hr/>
@@ -109,7 +111,7 @@
         </div>
         <div class="col mt-1 mb-2">
             <p>
-                <h5>PHP</h5>
+                <h5 class="text-center">PHP {{payslips.pk}}</h5>
             </p>
         </div>
     </div>

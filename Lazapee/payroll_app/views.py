@@ -90,7 +90,7 @@ def payslips(request):
                         pag_ibig = 100
                         tax1 = ((payroll_rate/2) + payroll_allowance + payroll_overtime - pag_ibig)*0.2
                         total_pay_Wtax1 = ((payroll_rate/2) + payroll_allowance + payroll_overtime - pag_ibig)-tax1
-                        Payslip.objects.create(id_number=payroll_pk, month=month, date_range=date_range1, year=year, pay_cycle=pay_cycle1, rate=payroll_rate, earnings_allowance=payroll_allowance, deductions_tax=tax1, overtime=payroll_overtime, total_pay=total_pay_Wtax1, pag_ibig=pag_ibig)
+                        Payslip.objects.create(id_number=payroll_pk,month=month, date_range=date_range1, year=year, pay_cycle=pay_cycle1, rate=payroll_rate, earnings_allowance=payroll_allowance, deductions_tax=tax1, overtime=payroll_overtime, total_pay=total_pay_Wtax1, pag_ibig=pag_ibig)
                         employee = Employee.objects.get(pk=payroll_for)
                         employee.resetOvertime()
                         return redirect('payslips')
@@ -110,6 +110,6 @@ def payslips(request):
 
         return render(request, 'payroll_app/payslips.html', {'employees':employees, 'payslips':payslips})
 
-def view_payslips(request):
-        employees = Employee.objects.all()
-        return render(request, 'payroll_app/view_payslips.html', {'employees':employees})
+def view_payslips(request, pk):
+        payslips = get_object_or_404(Payslip, pk=pk)
+        return render(request, 'payroll_app/view_payslips.html', {'payslips':payslips})
