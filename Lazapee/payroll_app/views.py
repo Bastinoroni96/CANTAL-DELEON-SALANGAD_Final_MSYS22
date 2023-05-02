@@ -25,10 +25,11 @@ def create_employee(request):
                         return redirect('create_employee')
 
                 #Check if employees with the given ID already exists
+                #hii
                 if Employee.objects.filter(id_number=id_number).exists():
                         messages.error(request, 'ID Already Exists')
                         return redirect('create_employee')
-                        
+
                 if name and id_number and rate:
                         allowance = request.POST.get('allowance') or 0.0
                         Employee.objects.create(name=name, id_number=id_number, rate=rate, allowance=allowance)
