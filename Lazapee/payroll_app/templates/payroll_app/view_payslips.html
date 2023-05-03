@@ -41,7 +41,7 @@
                 <h6 class="text-center">AMOUNT</h6>
             </p>
             <p>
-                {{payslips.rate}}
+                {{payslips.getCycleRate}}
                 <br>
                 {{payslips.earnings_allowance}}
                 <br>
@@ -59,7 +59,7 @@
         </div>
         <div class="col mt-1 mb-2">
             <p>
-                {% with a=payslips.rate b=payslips.earnings_allowance c=payslips.overtime %}
+                {% with a=payslips.getCycleRate b=payslips.earnings_allowance c=payslips.overtime %}
                 <h6 class="text-center">PHP {{ a|add:b|add:c }} </h6>
                 {% endwith %}
             </p>
