@@ -59,7 +59,9 @@
         </div>
         <div class="col mt-1 mb-2">
             <p>
-                <h6 class="text-center">PHP {{payslips.rate}} + {{payslips.earnings_allowance}} + {{payslips.overtime}}</h6>
+                {% with a=payslips.rate b=payslips.earnings_allowance c=payslips.overtime %}
+                <h6 class="text-center">PHP {{ a|add:b|add:c }} </h6>
+                {% endwith %}
             </p>
         </div>
         <hr/>
@@ -72,20 +74,31 @@
             <p class="text-secondary">
                 W/HOLDING TAX
                 <br>
+                {% if pay_cycle == pay_cycle1 %}
+                PAG-IBIG
+                {% elif pay_cycle == pay_cycle2 %}
                 PHILHEALTH
                 <br>
                 SSS
+                {%endif%} 
             </p>
         </div>
         <div class="col mt-2 mb-2">
             <p>
                 <br>
                 <br>
-                {{payslips.deductions_tax}}      
-                <br>
-                {{payslips.deductions_health}}
-                <br>
-                {{payslips.sss}}
+                {{payslips.deductions_tax}} 
+                <br> 
+                {% if pay_cycle == pay_cycle1 %}
+                    {{payslips.pag_ibig}}  
+
+                {% else %}
+                    <br>
+                    {{payslips.deductions_health}}
+                    <br>
+                    {{payslips.sss}}
+
+                {%endif%} 
             </p>
         <hr/>
         </div>
@@ -98,7 +111,16 @@
         </div>
         <div class="col mt-1 mb-2">
             <p>
-                <h6 class="text-center">PHP {{payslips.deductions_tax}} + {{payslips.deductions_health}} + {{payslips.sss}}</h6>
+                {% if pay_cycle == pay_cycle1 %}
+                    {% with a=payslips.deductions_tax  b=payslips.pag_ibig  %}
+                    <h6 class="text-center">PHP {{ a|add:b }} </h6>
+                    {% endwith %}
+
+                {% else %}
+                    {% with a=payslips.deductions_tax b=payslips.deductions_health c=payslips.sss %}
+                    <h6 class="text-center">PHP {{ a|add:b|add:c }} </h6>
+                    {% endwith %}
+                    {%endif%} 
             </p>
         </div>
         <hr/>
