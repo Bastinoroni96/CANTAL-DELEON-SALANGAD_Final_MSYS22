@@ -111,7 +111,7 @@ def payslips(request):
                         sss = payroll_pk.rate*0.045
                         tax2 = ((payroll_rate/2) + payroll_allowance + payroll_overtime - philhealth - sss)*0.2
                         total_pay_Wtax2 = ((payroll_rate/2) + payroll_allowance + payroll_overtime - philhealth - sss)-tax2
-                        Payslip.objects.create(id_number=payroll_pk, month=month, date_range=date_range2, year=year, pay_cycle=pay_cycle2, rate=payroll_rate, earnings_allowance=payroll_allowance, deductions_health=tax2, overtime=payroll_overtime, total_pay=total_pay_Wtax2, sss=sss)
+                        Payslip.objects.create(id_number=payroll_pk, month=month, date_range=date_range2, year=year, pay_cycle=pay_cycle2, rate=payroll_rate, earnings_allowance=payroll_allowance, deductions_tax=tax2 ,deductions_health=philhealth, overtime=payroll_overtime, total_pay=total_pay_Wtax2, sss=sss)
                         employee = Employee.objects.get(pk=payroll_for)
                         employee.resetOvertime()
                         return redirect('payslips')
