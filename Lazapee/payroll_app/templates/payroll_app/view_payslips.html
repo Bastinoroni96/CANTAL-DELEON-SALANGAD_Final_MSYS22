@@ -74,9 +74,9 @@
             <p class="text-secondary">
                 W/HOLDING TAX
                 <br>
-                {% if pay_cycle == pay_cycle1 %}
+                {% if payslips.pay_cycle == 1 %}
                 PAG-IBIG
-                {% elif pay_cycle == pay_cycle2 %}
+                {% elif payslips.pay_cycle == 2 %}
                 PHILHEALTH
                 <br>
                 SSS
@@ -89,11 +89,11 @@
                 <br>
                 {{payslips.deductions_tax}} 
                 <br> 
-                {% if pay_cycle == pay_cycle1 %}
+                {% if payslips.pay_cycle == 1 %}
                     {{payslips.pag_ibig}}  
 
-                {% else %}
-                    <br>
+                {% elif payslips.pay_cycle == 2 %}
+                    
                     {{payslips.deductions_health}}
                     <br>
                     {{payslips.sss}}
@@ -111,16 +111,16 @@
         </div>
         <div class="col mt-1 mb-2">
             <p>
-                {% if pay_cycle == pay_cycle1 %}
+                {% if payslips.pay_cycle == 1 %}
                     {% with a=payslips.deductions_tax  b=payslips.pag_ibig  %}
                     <h6 class="text-center">PHP {{ a|add:b }} </h6>
                     {% endwith %}
 
-                {% else %}
+                {% elif payslips.pay_cycle == 2 %}
                     {% with a=payslips.deductions_tax b=payslips.deductions_health c=payslips.sss %}
                     <h6 class="text-center">PHP {{ a|add:b|add:c }} </h6>
                     {% endwith %}
-                    {%endif%} 
+                {%endif%} 
             </p>
         </div>
         <hr/>
