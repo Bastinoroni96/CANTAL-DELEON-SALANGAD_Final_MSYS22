@@ -121,3 +121,30 @@ def payslips(request):
 def view_payslips(request, pk):
         payslips = get_object_or_404(Payslip, pk=pk)
         return render(request, 'payroll_app/view_payslips.html', {'payslips':payslips})
+
+
+#NEW
+def payroll_creation(request):
+    employees = Employee.objects.all()
+    if request.method == 'POST':
+        payroll_for = request.POST.get('payroll_for')
+        month = request.POST.get('month')
+        year = request.POST.get('year')
+        cycle = request.POST.get('cycle')
+        
+        if payroll_for == 'all_employees':
+            selected_employees = Employee.objects.all()
+        else:
+            employee = get_object_or_404(Employee, pk=payroll_for)
+            selected_employees = [employee]
+        
+        for employee in selected_employees:
+            payslip_exists = Payslip.objects.filter(id_number=employee, month=month, year=year, pay_cycle=cycle).exists()
+            if payslip_exists:
+                messages.error(request, f"Payslip already exists for Employee ID: {employee.id_number}")
+            else:
+                messages.success(request, f"Payslips created successfully for Employee ID: {employee.id_number}")
+        
+        return redirect('payroll_creation')
+    
+    return render(request, 'payroll_app/payroll_creation.html', {'employees': employees})
