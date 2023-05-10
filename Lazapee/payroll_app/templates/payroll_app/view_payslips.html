@@ -114,9 +114,9 @@
         <div class="col mt-1 mb-2">
             <p>
                 {% if payslips.pay_cycle == 1 %}
-                    {% with a=payslips.deductions_tax  b=payslips.pag_ibig  %}
-                    <h6 class="text-center">PHP {{ a|add:b }} </h6>
-                    {% endwith %}
+                    {% with a=payslips.deductions_tax b=payslips.pag_ibig %}
+                    <h6 class="text-center">PHP {{ a|add:b }}</h6>
+                {% endwith %}
 
                 {% elif payslips.pay_cycle == 2 %}
                     {% with a=payslips.deductions_tax b=payslips.deductions_health c=payslips.sss %}
