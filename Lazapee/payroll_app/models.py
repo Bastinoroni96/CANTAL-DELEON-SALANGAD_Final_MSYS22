@@ -10,6 +10,7 @@ class Employee(models.Model):
     overtime_pay = models.FloatField(null = True, blank = True)
     allowance = models.FloatField(null = True, blank = True)
 
+# This is an Employee model representing an employee's information
     def getName(self):
         return self.name
     
@@ -31,8 +32,8 @@ class Employee(models.Model):
     
     def __str__(self):
         return f"{self.id_number}"
-     
     
+
 class Payslip(models.Model):
     id_number = models.ForeignKey(Employee, on_delete=models.CASCADE)
     month = models.CharField(max_length=50)
@@ -48,6 +49,7 @@ class Payslip(models.Model):
     overtime = models.FloatField()
     total_pay = models.FloatField()
 
+# This is a Payslip model representing an employee's payslip information 
     def IDNumber(self):
         return self.id_number
     
