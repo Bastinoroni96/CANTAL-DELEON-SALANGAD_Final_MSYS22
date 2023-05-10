@@ -2,6 +2,7 @@ from django.db import models
 
 #hello
 # Create your models here.
+# Employee model, when objects are created, ID numbers have to be unique
 class Employee(models.Model):
     name = models.CharField(max_length=255)
     id_number = models.CharField(max_length=20, unique=True)

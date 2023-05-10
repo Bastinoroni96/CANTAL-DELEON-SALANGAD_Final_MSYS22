@@ -1,3 +1,4 @@
+# Imported shortcuts were modules used in previous activities/labs
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Employee, Payslip 
@@ -13,7 +14,7 @@ def create_employee(request):
                 name = request.POST.get('name')
                 id_number = request.POST.get('id')
                 rate = request.POST.get('rate')
-
+                #exceptions if name, id_number and rate are empty inputs
                 if not name:
                         messages.error(request, 'Please enter a name')
                         return redirect('create_employee')
@@ -44,7 +45,7 @@ def update_employee(request, pk):
                 name = request.POST.get('name')
                 id_number = request.POST.get('id')
                 rate = request.POST.get('rate')
-
+                #exceptions if name, id_number and rate are empty inputs
                 if not name:
                         messages.error(request, 'Please enter a name')
                         return redirect('create_employee')
@@ -54,7 +55,7 @@ def update_employee(request, pk):
                 if not rate:
                         messages.error(request, 'Please enter a rate')
                         return redirect('create_employee')
-
+                #Check if employees with the given ID already exists
                 if name and id_number and rate:
                         allowance = request.POST.get('allowance') or 0.0
                         Employee.objects.filter(pk=pk).update(name=name, id_number=id_number, rate=rate, allowance=allowance)
@@ -69,6 +70,8 @@ def delete_employee(request, pk):
         return redirect('view_employee')
 
 def calculate_overtimepay(request, pk):
+        #function for calculating overtime pay in view_employees
+        #same as delete function, using primary key to select specific objects to calculate and update overtimepay
         if(request.method=="POST"):
                 employee = get_object_or_404(Employee, pk=pk)
                 overtime_hours = request.POST.get('overtime_hours') or 0.0
@@ -80,19 +83,16 @@ def calculate_overtimepay(request, pk):
         return redirect('view_employee')
 
 def payslips(request):
+        #initial variables set returns all objects from Employee and Payslip model
         employees = Employee.objects.all()
         payslips = Payslip.objects.all()
-        if(request.method=="POST"):
+        if(request.method=="POST"): #get inputs from form
                 payroll_for = request.POST.get('payroll_for')
-                #payroll_pk = Employee.objects.get(pk=payroll_for)
-                #payroll_rate = payroll_pk.rate
-                #payroll_allowance = payroll_pk.allowance
-                #payroll_overtime = payroll_pk.overtime_pay
                 month = request.POST.get('month')
                 year = request.POST.get('year')
                 cycle = request.POST.get('cycle') #Make if statements and do the math with variables of payslips and employees
 
-                if cycle == '1':
+                if cycle == '1': #if this option is chosen, these variables are set, else variables for pay cycle 2 will be set
                         pay_cycle = 1
                         date_range = '1-15'
                         pag_ibig_rate = 100
@@ -102,17 +102,18 @@ def payslips(request):
                         philhealth_rate = 0.04
                         sss_rate = 0.045
                 
-                if payroll_for =='all_employees':
+                if payroll_for =='all_employees': #if payroll_for is selected to All Employees, all employees will be selected
                        selected_employees = employees
-                else:
+                else: #else, specific employee are selected through IDs, and chosen based of primary key
                        selected_employee = get_object_or_404(Employee, pk=payroll_for)
                        selected_employees = [selected_employee]
 
-                for employee in selected_employees:
+                for employee in selected_employees: #for loop which handles exceptions
                        payslip_exists = Payslip.objects.filter(id_number=employee, month=month, year=year, pay_cycle=cycle).exists()
-                       if payslip_exists:
+                       if payslip_exists: #if a payslip exists with these attributes, an error message will be raised 
                                 messages.error(request, f"Payslip already exists for Employee ID: {employee.id_number}")
-                       else:
+                       else: #else payslip will be created using key-value pairs of data that will be rendered in the view_payslip template
+                                #Using a dictionary, the key values will be unpacked using ** syntax
                                 payroll_rate = employee.rate
                                 payroll_allowance = employee.allowance
                                 payroll_overtime = employee.overtime_pay
@@ -121,7 +122,8 @@ def payslips(request):
                                         tax_rate = 0.2
                                         tax = ((payroll_rate / 2) + payroll_allowance + payroll_overtime - pag_ibig_rate) * tax_rate
                                         total_pay_Wtax = ((payroll_rate / 2) + payroll_allowance + payroll_overtime - pag_ibig_rate) - tax
-                                        payslip_context = {
+                                        #using a dictionary c
+                                        payslip_context = { 
                                                 'id_number': employee,
                                                 'month': month,
                                                 'date_range': date_range,
@@ -154,7 +156,9 @@ def payslips(request):
                                                 'total_pay': total_pay_Wtax,
                                                 'sss': sss,
                                         }
+                                #payslip object will be created using the key values in the payslip_context dictionary
                                 Payslip.objects.create(**payslip_context)
+                                #after payslip is created, employee object's overtime attribute will reset to 0
                                 employee.resetOvertime()
 
                                 messages.success(request, f"Payslips created successfully for Employee ID: {employee.id_number}")

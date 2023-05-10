@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
-
+#No need to make multiple groups for different primary key objects since objects aren't working in tandem in all visited templates
+#Only tandem present is usage of foreign keys
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.view_employee, name='view_employee'),
