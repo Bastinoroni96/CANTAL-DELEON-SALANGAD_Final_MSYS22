@@ -7,7 +7,7 @@ class Employee(models.Model):
     name = models.CharField(max_length=255)
     id_number = models.CharField(max_length=20, unique=True)
     rate = models.FloatField()
-    overtime_pay = models.FloatField(null = True, blank = True)
+    overtime_pay = models.FloatField(default=0, blank = True)
     allowance = models.FloatField(null = True, blank = True)
 
 # This is an Employee model representing an employee's information

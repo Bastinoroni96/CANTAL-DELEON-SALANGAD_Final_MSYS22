@@ -161,8 +161,6 @@ def payslips(request):
                                 #after payslip is created, employee object's overtime attribute will reset to 0
                                 employee.resetOvertime()
 
-                                messages.success(request, f"Payslips created successfully for Employee ID: {employee.id_number}")
-
                 
                 return redirect('payslips')
 
