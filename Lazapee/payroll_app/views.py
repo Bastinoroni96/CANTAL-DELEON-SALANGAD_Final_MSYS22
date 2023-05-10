@@ -84,52 +84,83 @@ def payslips(request):
         payslips = Payslip.objects.all()
         if(request.method=="POST"):
                 payroll_for = request.POST.get('payroll_for')
-                payroll_pk = Employee.objects.get(pk=payroll_for)
-                payroll_rate = payroll_pk.rate
-                payroll_allowance = payroll_pk.allowance
-                payroll_overtime = payroll_pk.overtime_pay
+                #payroll_pk = Employee.objects.get(pk=payroll_for)
+                #payroll_rate = payroll_pk.rate
+                #payroll_allowance = payroll_pk.allowance
+                #payroll_overtime = payroll_pk.overtime_pay
                 month = request.POST.get('month')
                 year = request.POST.get('year')
                 cycle = request.POST.get('cycle') #Make if statements and do the math with variables of payslips and employees
 
-                if payroll_for =='all_employees':
-                       selected_employees = Employee.objects.all()
+                if cycle == '1':
+                        pay_cycle = 1
+                        date_range = '1-15'
+                        pag_ibig_rate = 100
                 else:
-                       employee = get_object_or_404(Employee, pk=payroll_for)
-                       selected_employees = [employee]
+                        pay_cycle = 2
+                        date_range = '16-30'
+                        philhealth_rate = 0.04
+                        sss_rate = 0.045
+                
+                if payroll_for =='all_employees':
+                       selected_employees = employees
+                else:
+                       selected_employee = get_object_or_404(Employee, pk=payroll_for)
+                       selected_employees = [selected_employee]
 
                 for employee in selected_employees:
                        payslip_exists = Payslip.objects.filter(id_number=employee, month=month, year=year, pay_cycle=cycle).exists()
                        if payslip_exists:
-                              messages.error(request, f"Payslip already exists for Employee ID: {employee.id_number}")
+                                messages.error(request, f"Payslip already exists for Employee ID: {employee.id_number}")
                        else:
-                              messages.success(request, f"Payslips created successfully for Employee ID: {employee.id_number}")
+                                payroll_rate = employee.rate
+                                payroll_allowance = employee.allowance
+                                payroll_overtime = employee.overtime_pay
 
-                if cycle == '1':
-                        pay_cycle1 = 1
-                        date_range1 = '1-15'
-                        pag_ibig = 100
-                        tax1 = ((payroll_rate/2) + payroll_allowance + payroll_overtime - pag_ibig)*0.2
-                        total_pay_Wtax1 = ((payroll_rate/2) + payroll_allowance + payroll_overtime - pag_ibig)-tax1
-                        Payslip.objects.create(id_number=payroll_pk,month=month, date_range=date_range1, year=year, pay_cycle=pay_cycle1, rate=payroll_rate, earnings_allowance=payroll_allowance, deductions_tax=tax1, overtime=payroll_overtime, total_pay=total_pay_Wtax1, pag_ibig=pag_ibig)
-                        employee = Employee.objects.get(pk=payroll_for)
-                        employee.resetOvertime()
-                        return redirect('payslips')
+                                if cycle == '1':
+                                        tax_rate = 0.2
+                                        tax = ((payroll_rate / 2) + payroll_allowance + payroll_overtime - pag_ibig_rate) * tax_rate
+                                        total_pay_Wtax = ((payroll_rate / 2) + payroll_allowance + payroll_overtime - pag_ibig_rate) - tax
+                                        payslip_context = {
+                                                'id_number': employee,
+                                                'month': month,
+                                                'date_range': date_range,
+                                                'year': year,
+                                                'pay_cycle': pay_cycle,
+                                                'rate': payroll_rate,
+                                                'earnings_allowance': payroll_allowance,
+                                                'deductions_tax': tax,
+                                                'overtime': payroll_overtime,
+                                                'total_pay': total_pay_Wtax,
+                                                'pag_ibig': pag_ibig_rate,
+                                        }
+                                else:
+                                        tax_rate = 0.2
+                                        philhealth = payroll_rate * philhealth_rate
+                                        sss = payroll_rate * sss_rate
+                                        tax = ((payroll_rate / 2) + payroll_allowance + payroll_overtime - philhealth - sss) * tax_rate
+                                        total_pay_Wtax = ((payroll_rate / 2) + payroll_allowance + payroll_overtime - philhealth - sss) - tax
+                                        payslip_context = {
+                                                'id_number': employee,
+                                                'month': month,
+                                                'date_range': date_range,
+                                                'year': year,
+                                                'pay_cycle': pay_cycle,
+                                                'rate': payroll_rate,
+                                                'earnings_allowance': payroll_allowance,
+                                                'deductions_tax': tax,
+                                                'deductions_health': philhealth,
+                                                'overtime': payroll_overtime,
+                                                'total_pay': total_pay_Wtax,
+                                                'sss': sss,
+                                        }
+                                Payslip.objects.create(**payslip_context)
+                                employee.resetOvertime()
 
+                                messages.success(request, f"Payslips created successfully for Employee ID: {employee.id_number}")
 
-                if cycle == '2':
-                        pay_cycle2 = 2
-                        date_range2 = '16-30'
-                        philhealth = payroll_pk.rate*0.04
-                        sss = payroll_pk.rate*0.045
-                        tax2 = ((payroll_rate/2) + payroll_allowance + payroll_overtime - philhealth - sss)*0.2
-                        total_pay_Wtax2 = ((payroll_rate/2) + payroll_allowance + payroll_overtime - philhealth - sss)-tax2
-                        Payslip.objects.create(id_number=payroll_pk, month=month, date_range=date_range2, year=year, pay_cycle=pay_cycle2, rate=payroll_rate, earnings_allowance=payroll_allowance, deductions_tax=tax2 ,deductions_health=philhealth, overtime=payroll_overtime, total_pay=total_pay_Wtax2, sss=sss)
-                        employee = Employee.objects.get(pk=payroll_for)
-                        employee.resetOvertime()
-                        return redirect('payslips')
                 
-                return redirect('payroll_creation')
+                return redirect('payslips')
 
         return render(request, 'payroll_app/payslips.html', {'employees':employees, 'payslips':payslips})
 
