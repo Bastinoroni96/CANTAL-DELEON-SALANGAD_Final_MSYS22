@@ -25,7 +25,6 @@ def create_employee(request):
                         return redirect('create_employee')
 
                 #Check if employees with the given ID already exists
-                #hii
                 if Employee.objects.filter(id_number=id_number).exists():
                         messages.error(request, 'ID Already Exists')
                         return redirect('create_employee')
@@ -65,6 +64,7 @@ def update_employee(request, pk):
                 return render(request, 'payroll_app/update_employee.html', {'e':e})
 
 def delete_employee(request, pk):
+        #to find the Employee object with the primary key equals to pk and delete the object from database
         Employee.objects.filter(pk=pk).delete()
         return redirect('view_employee')
 
@@ -165,5 +165,6 @@ def payslips(request):
         return render(request, 'payroll_app/payslips.html', {'employees':employees, 'payslips':payslips})
 
 def view_payslips(request, pk):
+        #retrieves single Payslip object using its primary key
         payslips = get_object_or_404(Payslip, pk=pk)
         return render(request, 'payroll_app/view_payslips.html', {'payslips':payslips})

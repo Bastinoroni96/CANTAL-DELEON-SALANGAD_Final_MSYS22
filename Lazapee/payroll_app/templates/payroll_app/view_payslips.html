@@ -59,6 +59,7 @@
         </div>
         <div class="col mt-1 mb-2">
             <p>
+                <!-- appointed variables for each value and used the |add filter to get the sum -->
                 {% with a=payslips.getCycleRate b=payslips.earnings_allowance c=payslips.overtime %}
                 <h6 class="text-center">PHP {{ a|add:b|add:c }} </h6>
                 {% endwith %}
@@ -74,8 +75,10 @@
             <p class="text-secondary">
                 W/HOLDING TAX
                 <br>
+                <!-- since cycle 1 only needs to show deductions from pag-ibig -->
                 {% if payslips.pay_cycle == 1 %}
                 PAG-IBIG
+                <!-- since cycle 2 needs to show deductions from philhealth and sss -->
                 {% elif payslips.pay_cycle == 2 %}
                 PHILHEALTH
                 <br>
