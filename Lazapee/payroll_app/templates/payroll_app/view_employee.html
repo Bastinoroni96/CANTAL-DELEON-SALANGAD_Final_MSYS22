@@ -4,11 +4,14 @@
                 {% block content %}
                 <div class="row">
                     <div class="mx-auto col-10 col-md-10 col-lg-10 mt-3">
+                         <!-- Employee List Header -->
                         <div style="display: flex; align-items: center;">
                             <h1>Employees</h1>
+                            <!-- Button to add a new employee -->
                             <a type="button" class="btn btn-secondary" href="{% url 'create_employee'%}" style="margin-left: auto;">+ New Employee</a>
                         </div>
                         
+                        <!-- Employee Table -->
                         <div class="col-xs-1 center-block">
                             <table class="table table-striped mb-5">
                                 <thead>
@@ -21,6 +24,7 @@
                                     <th scope="col">  </th>
                                 </thead>
                                 <tbody>
+                                    <!-- Iterate over a collection of employee objects and perform actions or display information for each individual employee in the template -->
                                     {% for d in employees %}
                                     <tr>
                                         <td> {{ d.name }} </td>
@@ -29,6 +33,7 @@
                                         <td> {{ d.allowance }} </td>
                                         <td> {{ d.overtime_pay }} </td>
                                         <td>
+                                             <!-- Employee Options -->
                                             <form id="employee_update" method="POST" action="{% url 'calculate_overtimepay' pk=d.pk %}">{% csrf_token %}
                                                 <div class="form-check-inline mt-1">
                                                     <a type="button" class="btn btn-primary" href="{% url 'update_employee' pk=d.pk %}">Update</a>

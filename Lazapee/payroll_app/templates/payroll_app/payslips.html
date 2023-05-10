@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+                <!-- Payroll Creation Form -->
                 <div class="mx-auto col-8 col-md-8 col-lg-8 mt-5">
                     <div class="mt-3">
                         <style>
@@ -10,6 +11,7 @@
                             }
                         </style>
                         {% for message in messages %}
+                        <!-- Display error messages -->
                         <b>{{message}}</b>
                         {% endfor %}
                     </div>
@@ -17,6 +19,7 @@
                     <div class="card bg-light mb-3">
                         <div class="card-body">
                             <form method="POST" action="{% url 'payslips' %}">{% csrf_token %}
+                                 <!-- Payroll for Selection -->
                                 <div class="form-group mb-3 text-center align-items-center" style>
                                     <label class="form-check-inline" for="payroll_for">Payroll for:</label>
                                     <select class="form-check-inline form-select" style="width: 250px;" id="payroll_for"  name="payroll_for">
@@ -28,7 +31,7 @@
                                     </select>
                                 </div>
                                 <hr>
-                                
+                                <!-- Month Selection -->
                                 <div class="form-group mb-3 text-left align-items-left form-check-inline" style>
                                     <label class="form-check-inline" for="month">Month:</label>
                                     <select class="form-check-inline form-select" style="width: 170px;" id="month"  name="month">
@@ -47,12 +50,12 @@
                                         <option value="December">December</option>
                                     </select>
                                 </div>
-
+                                <!-- Year Input -->
                                 <div class="form-group mb-3 text-center align-items-center form-check-inline" style>
                                     <label class="form-check-inline" for="year">Year:</label>
                                     <input class="form-check-inline form-control" style="width: 170px;" type="text" id="year"  name="year">
                                 </div>
-
+                                <!-- Cycle Selection -->
                                 <div class="form-group mb-3 text-right align-items-right form-check-inline" style>
                                     <label class="form-check-inline" for="cycle">Cycle:</label>
                                     <select class="form-check-inline form-select" style="width: 170px;" id="cycle"  name="cycle">
@@ -61,7 +64,7 @@
                                         <option value="2">2</option>
                                     </select>
                                 </div>
-                                
+                                <!-- Submit Button -->
                                 <div class="d-flex justify-content-center">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
